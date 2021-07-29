@@ -1,11 +1,17 @@
 import {v1} from "uuid";
 import {UserType} from "./user-reducer";
 
-// Объявление констант для экшинов
+// Объявление констант для экшенов
 export enum ACTIONS_TYPE {
     ADD_USER = 'Users/ADD_USER',
     DELETE_USER = 'Users/DELETE_USER',
     CHANGE_USER_FIO = 'Users/CHANGE_USER_FIO',
+    CHANGE_USER_POST = 'Users/CHANGE_USER_POST',
+}
+
+export enum CHANGE_FIELD_TYPE {
+    POST = 'post',
+    PLACE = 'place'
 }
 
 // type action for add User
@@ -38,4 +44,16 @@ export const usersChangeUserFio = (userId: string, fio: string): UsersChangeFioT
     fio,
     userId
 })
+
+
+// type action for Change any param
+export type UsersChangeUserPostType = {
+    type: ACTIONS_TYPE.CHANGE_USER_POST
+    userId: string
+    post: string
+}
+//function action creator for Change Any param by id
+export const usersChangeUserPost = (userId: string, post: string): UsersChangeUserPostType => {
+    return {type: ACTIONS_TYPE.CHANGE_USER_POST, userId, post}
+}
 

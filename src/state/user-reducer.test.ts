@@ -1,6 +1,11 @@
 import {userReducer, UserType} from "./user-reducer";
 import {v1} from "uuid";
-import {usersAddUser, usersChangeUserFio, usersDeleteUser} from "./actions";
+import {
+    usersAddUser,
+    usersChangeUserFio,
+    usersChangeUserPost,
+    usersDeleteUser
+} from "./actions";
 
 test('Add new user', () => {
     const startState: Array<UserType> = [
@@ -79,5 +84,32 @@ test('Change user fio', () => {
 
     expect(endState.length).toBe(2)
     expect(endState[1].fio).toBe('Логинов')
+
+})
+
+test('Change user parametrs', () => {
+    const user2Id = v1()
+    const startState: Array<UserType> = [
+        {
+            userId: v1(),
+            fio: 'Асмоловский',
+            post: 'отдел комплектования',
+            place: 'ведущий программист',
+            isTeacher: true,
+            isAdmin: true
+        },
+        {
+            userId: user2Id,
+            fio: 'Мальцева',
+            post: 'отдел информации',
+            place: 'заведущая отделом',
+            isTeacher: false,
+            isAdmin: false
+        }
+    ]
+    const endState = userReducer(startState, usersChangeUserPost(user2Id, 'лаборатория'))
+
+    expect(endState.length).toBe(2)
+    expect(endState[1].post).toBe('лаборатория')
 
 })
